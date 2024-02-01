@@ -4,6 +4,7 @@ const morgan = require("morgan");
 // Setting up our Route
 const emailRouter = require("./router/emailRouter");
 
+
 const app = express();
 
 // Configuring our app

@@ -2,7 +2,7 @@ const resend = require("resend");
 
 exports.sendEmail = async (req, res) => {
   //1) Create a Resend Client
-  const resendy = new resend.Resend(process.env.RESEND_PASSKEY);
+  const resendy = new resend.Resend("re_EkyWteyw_382BtNBxQqkcF6KgwCHosyGG");
 
   // 2) Get the Data out of the request body
   const { from, to, subject, content, attachments } = req.body;
@@ -11,9 +11,9 @@ exports.sendEmail = async (req, res) => {
   try {
     const data = await resendy.emails.send({
       from: from,
-      to: [to],
+      to: to,
       subject: subject,
-      html: `<div>${content} .</div>`,
+      html: `<div>${content}</div>`,
       attachments: attachments,
       tags: [
         {
@@ -39,9 +39,9 @@ exports.sendEmail = async (req, res) => {
     });
   } catch (err) {
     //6) Send Bad Request if something went wrong
-    res.status(404).json({
+    res.status(400).json({
       status: "failed",
-      message: err?.message || "Something went wrong",
+      message: err?.message || "Something went wrong.Please try again",
     });
   }
 };
